@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_top">
+    <title>Thu Hình Ảnh Hoạt Động Đoàn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --ink: #1C2541;
+        --ink-soft: #4B5578;
+        --gold: #B8892B;
+        --gold-soft: rgba(184, 137, 43, 0.12);
+        --paper: #F5F2EC;
+        --surface: #FFFFFF;
+        --line: #E5E1D6;
+        --success: #1F7A4D;
+        --success-bg: #EAF6EF;
+        --error: #B3261E;
+        --error-bg: #FBEAEA;
+        --muted: #767A8C;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background-color: var(--paper);
+        margin: 0;
+        padding: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        color: var(--ink);
+      }
+
+      .container {
+        background: var(--surface);
+        border-radius: 18px;
+        box-shadow: 0 1px 2px rgba(28,37,65,0.04), 0 12px 32px rgba(28,37,65,0.10);
+        width: 100%;
+        max-width: 460px;
+        margin-top: 28px;
+        overflow: hidden;
+        animation: riseIn 0.5s ease-out both;
+      }
+
+      @keyframes riseIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .container { animation: none; }
+      }
+
+      .accent-bar {
+        height: 5px;
+        background: linear-gradient(90deg, var(--gold), #D8B25F);
+      }
+
+      .header {
+        padding: 32px 32px 24px;
+        text-align: center;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .school-name {
+        display: inline-block;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--ink-soft);
+        letter-spacing: 0.03em;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--gold);
+        margin-bottom: 16px;
+      }
+
+      h1 {
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-weight: 700;
+        font-size: 25px;
+        line-height: 1.3;
+        color: var(--ink);
+        margin: 0 0 14px 0;
+      }
+
+      .note-badge {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--gold);
+        background: var(--gold-soft);
+        border: 1px solid rgba(184, 137, 43, 0.35);
+        border-radius: 999px;
+        padding: 5px 14px;
+        letter-spacing: 0.02em;
+      }
+
+      .note-badge:empty { display: none; }
+
+      .form-body {
+        padding: 28px 32px 32px;
+      }
+
+      .form-group {
+        margin-bottom: 18px;
+        text-align: left;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 7px;
+        font-weight: 600;
+        color: var(--ink);
+        font-size: 13.5px;
+      }
+
+      input[type="text"], select {
+        width: 100%;
+        padding: 12px 14px;
+        font-size: 15px;
+        font-family: inherit;
+        color: var(--ink);
+        border: 1.5px solid var(--line);
+        border-radius: 10px;
+        background: var(--surface);
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      }
+
+      input[type="text"]:focus, select:focus {
+        outline: none;
+        border-color: var(--gold);
+        box-shadow: 0 0 0 3px var(--gold-soft);
+      }
+
+      select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234B5578' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        background-size: 18px;
+        padding-right: 42px;
+      }
+
+      .file-drop {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 14px;
+        border: 1.5px dashed var(--line);
+        border-radius: 10px;
+        cursor: pointer;
+        transition: border-color 0.15s ease, background 0.15s ease;
+      }
+
+      .file-drop:hover { border-color: var(--gold); background: var(--gold-soft); }
+
+      .file-drop.has-file {
+        border-style: solid;
+        border-color: var(--gold);
+        background: var(--gold-soft);
+      }
+
+      .file-drop svg { flex-shrink: 0; color: var(--ink-soft); }
+
+      .file-drop span {
+        font-size: 14px;
+        color: var(--muted);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .file-drop.has-file span { color: var(--ink); font-weight: 500; }
+
+      #fileInput { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
+      button#uploadBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        width: 100%;
+        padding: 15px;
+        margin-top: 8px;
+        background: var(--ink);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.15s ease, transform 0.1s ease;
+      }
+
+      button#uploadBtn:hover { background: #142033; }
+      button#uploadBtn:active { transform: scale(0.99); }
+      button#uploadBtn:disabled { background: #A9ADBD; cursor: not-allowed; }
+
+      .banner {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-top: 18px;
+        padding: 13px 14px;
+        border-radius: 10px;
+        font-size: 13.5px;
+        line-height: 1.45;
+        border: 1px solid transparent;
+      }
+      .banner svg { flex-shrink: 0; margin-top: 1px; }
+      .banner-error { background: var(--error-bg); border-color: rgba(179,38,30,0.2); color: var(--error); }
+      .banner-success { background: var(--success-bg); border-color: rgba(31,122,77,0.2); color: var(--success); }
+      .banner-info { background: rgba(28,37,65,0.05); border-color: rgba(28,37,65,0.12); color: var(--ink-soft); }
+
+      .spinner {
+        width: 15px; height: 15px;
+        border: 2px solid rgba(28,37,65,0.2);
+        border-top-color: var(--ink-soft);
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      @media (prefers-reduced-motion: reduce) {
+        .spinner { animation: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="accent-bar"></div>
+      <div class="header">
+        <div class="school-name" id="schoolNameDisplay">Đang tải...</div>
+        <h1 id="titleDisplay">Đang tải...</h1>
+        <div class="note-badge" id="noteDisplay"></div>
+      </div>
+
+      <div class="form-body">
+        <div class="form-group">
+          <label for="fullName">Họ và tên</label>
+          <input type="text" id="fullName" placeholder="Nhập họ và tên đầy đủ">
+        </div>
+
+        <div class="form-group">
+          <label for="className">Lớp</label>
+          <input type="text" id="className" value="12A3">
+        </div>
+
+        <div class="form-group">
+          <label for="weekSelect">Tuần hoạt động</label>
+          <select id="weekSelect">
+            <option value="" disabled selected>-- Chọn Tuần --</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="fileInput">Ảnh hoặc video minh chứng</label>
+          <label class="file-drop" id="fileDropLabel" for="fileInput">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span id="fileNameText">Chọn ảnh hoặc video để tải lên</span>
+          </label>
+          <input type="file" id="fileInput" accept="image/*,video/*">
+        </div>
+
+        <button id="uploadBtn" onclick="startProcess()">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Gửi ảnh ngay
+        </button>
+
+        <div id="message"></div>
+      </div>
+    </div>
+
+    <script>
+      var ICONS = {
+        error: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+        success: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'
+      };
+
+      function showMessage(type, text) {
+        var messageDiv = document.getElementById('message');
+        if (type === 'loading') {
+          messageDiv.innerHTML = '<div class="banner banner-info"><div class="spinner"></div><div>' + text + '</div></div>';
+        } else {
+          messageDiv.innerHTML = '<div class="banner banner-' + type + '">' + ICONS[type] + '<div>' + text + '</div></div>';
+        }
+      }
+
+      function clearMessage() {
+        document.getElementById('message').innerHTML = '';
+      }
+
+      // Nạp cấu hình (tên phong trào, tên trường, danh sách tuần) từ Sheet
+      window.onload = function () {
+        google.script.run
+          .withSuccessHandler(function (config) {
+            document.getElementById('schoolNameDisplay').textContent = config.tenTruong;
+            document.getElementById('titleDisplay').innerHTML = (config.tieuDe || '').replace(/\n/g, '<br>');
+            document.getElementById('noteDisplay').textContent = config.ghiChu || '';
+            document.title = (config.tieuDe || 'Thu Hình Ảnh Hoạt Động Đoàn').replace(/\n/g, ' ');
+
+            var weekSelect = document.getElementById('weekSelect');
+            (config.weeks || []).forEach(function (w) {
+              var opt = document.createElement('option');
+              opt.value = w;
+              opt.textContent = w;
+              weekSelect.appendChild(opt);
+            });
+          })
+          .withFailureHandler(function () {
+            document.getElementById('schoolNameDisplay').textContent = 'Trường THPT Phan Việt Thống';
+            document.getElementById('titleDisplay').textContent = 'Web Thu Hình Ảnh Hoạt Động Đoàn';
+            showMessage('error', 'Không tải được cấu hình, đang dùng giá trị mặc định.');
+          })
+          .getFormConfig();
+      };
+
+      // Cập nhật tên file đã chọn trên ô chọn file tuỳ chỉnh
+      document.getElementById('fileInput').addEventListener('change', function () {
+        var label = document.getElementById('fileDropLabel');
+        var text = document.getElementById('fileNameText');
+        if (this.files && this.files.length > 0) {
+          text.textContent = this.files[0].name;
+          label.classList.add('has-file');
+        } else {
+          text.textContent = 'Chọn ảnh hoặc video để tải lên';
+          label.classList.remove('has-file');
+        }
+      });
+
+      // Nén ảnh trước khi gửi (giảm dung lượng, không áp dụng cho video)
+      function compressImage(file, maxWidth, quality) {
+        return new Promise(function (resolve, reject) {
+          var img = new Image();
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            img.onload = function () {
+              var scale = Math.min(1, maxWidth / img.width);
+              var canvas = document.createElement('canvas');
+              canvas.width = Math.round(img.width * scale);
+              canvas.height = Math.round(img.height * scale);
+              var ctx = canvas.getContext('2d');
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+              canvas.toBlob(function (blob) {
+                if (blob) resolve(blob); else reject(new Error('Không nén được ảnh.'));
+              }, 'image/jpeg', quality);
+            };
+            img.onerror = function () { reject(new Error('Không đọc được ảnh.')); };
+            img.src = e.target.result;
+          };
+          reader.onerror = function () { reject(new Error('Lỗi đọc file.')); };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function proceedUpload(fileOrBlob, uploadName, fullName, className, week, btn) {
+        showMessage('loading', 'Đang gửi lên hệ thống, vui lòng đợi...');
+
+        var reader = new FileReader();
+        reader.onerror = function () {
+          btn.disabled = false;
+          showMessage('error', 'Lỗi khi đọc file trên trình duyệt.');
+        };
+
+        reader.onload = function (e) {
+          var base64Data = e.target.result;
+
+          google.script.run
+            .withSuccessHandler(function (response) {
+              btn.disabled = false;
+              if (!response) {
+                showMessage('error', 'Server không phản hồi dữ liệu.');
+              } else if (response.indexOf('LỖI:') === 0 || response.indexOf('LỖI (') === 0) {
+                showMessage('error', response);
+              } else {
+                showMessage('success', 'Gửi thành công vào <b>' + week + '</b>!');
+                document.getElementById('fullName').value = '';
+                document.getElementById('weekSelect').value = '';
+                document.getElementById('fileInput').value = '';
+                document.getElementById('fileNameText').textContent = 'Chọn ảnh hoặc video để tải lên';
+                document.getElementById('fileDropLabel').classList.remove('has-file');
+              }
+            })
+            .withFailureHandler(function (err) {
+              btn.disabled = false;
+              showMessage('error', 'Lỗi kết nối: ' + (err.message || err));
+            })
+            .uploadFile(base64Data, uploadName, fullName, className, week);
+        };
+
+        reader.readAsDataURL(fileOrBlob);
+      }
+
+      function startProcess() {
+        var fullName = document.getElementById('fullName').value.trim();
+        var className = document.getElementById('className').value.trim();
+        var week = document.getElementById('weekSelect').value;
+        var fileInput = document.getElementById('fileInput');
+        var btn = document.getElementById('uploadBtn');
+
+        if (!fullName || !className || !week) {
+          showMessage('error', 'Vui lòng nhập đủ Họ tên, Lớp và chọn Tuần.');
+          return;
+        }
+        if (fileInput.files.length === 0) {
+          showMessage('error', 'Vui lòng chọn một ảnh hoặc video.');
+          return;
+        }
+
+        var file = fileInput.files[0];
+        btn.disabled = true;
+
+        if (file.type.indexOf('image/') === 0) {
+          showMessage('loading', 'Đang nén ảnh...');
+          compressImage(file, 1600, 0.8)
+            .then(function (blob) {
+              proceedUpload(blob, 'anh.jpg', fullName, className, week, btn);
+            })
+            .catch(function () {
+              // Nén lỗi thì gửi ảnh gốc, không chặn người dùng
+              proceedUpload(file, file.name, fullName, className, week, btn);
+            });
+        } else {
+          proceedUpload(file, file.name, fullName, className, week, btn);
+        }
+      }
+    </script>
+  </body>
+</html>
