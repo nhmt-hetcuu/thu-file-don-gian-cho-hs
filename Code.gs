@@ -27,8 +27,8 @@ function taoConfigMacDinh() {
   getOrCreateConfigSheet_();
 }
 
-var SPREADSHEET_ID = '1eCVOLyUm06fPPuAzO5xu4opc6CUukAF-Z2rvSc5v2Og'; // ID Sheet cá nhân của bạn
-var MAIN_FOLDER_ID = '1TpSApDlrESK6ZmaCIKi_k4r0i0N3SGjh'; // ID Drive cá nhân của bạn
+var SPREADSHEET_ID = 'DÁN_ID_SHEET_CỦA_BẠN';
+var MAIN_FOLDER_ID = 'DÁN_ID_THƯ_MỤC_DRIVE_CỦA_BẠN';
 
 function getOrCreateConfigSheet_() {
   var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
